@@ -6,5 +6,8 @@ Phylostratigraphy analysis offers an evolutionary perspective to explore the age
 This study used previously published datasets (Bryant et al. 2017; Jiang et al. 2017; Li et al. 2021; Wei et al. 2022).
 ## Performing Phylostratigraphy  
 Phylostratigraphy analysis for axolotl genes are following the methods in [https://github.com/AlexGa/Phylostratigraphy](https://github.com/AlexGa/Phylostratigraphy).
-### 
-makeblastdb -dbtype prot -in phyloBlastDB_Drost_Gabel_Grosse_Quint.fa
+###  Constructing index for database    
+`makeblastdb -dbtype prot -in phyloBlastDB_Drost_Gabel_Grosse_Quint.fa`    
+###  Adding taxonomy header for axolotl protein coding sequences    
+`python3 add_taxomomy_to_axolotlProtein.fa.py AmexT_v47.PEPTIDES.filter.fasta axolotl.cellular.organisms.header AmexT_v47.PEPTIDES.filter.PSname.fasta`    
+###  
