@@ -21,12 +21,18 @@ python3 pick_putative_from_longestFa.py -f AmexT_v47.PEPTIDES.longest.fa -g Amex
 ###  Aligning axolotl protein coding sequences with phyloBlastDB to obtain the phylostrata map of all axolotl genes    
 ```perl createPSmap.pl --organism AmexT_v47.PEPTIDES.filter.PSname.fasta --database phyloBlastDB_Drost_Gabel_Grosse_Quint.fa --prefix AmexT_v47.PEPTIDES.filter.PS --seqOffset 1000  --evalue 1e-5 --threads 60 --blastPlus```    
 ## 3. Obtain the gene expression matrix of axolotl embryonic development      
-We downloaded the raw fastq files of axolotl embryonic development data from Jiang et al.(Jiang et al. 2017). All raw fastq were trimmed by trimmomatic and quantified by salmon.
+We downloaded the raw fastq files of axolotl embryonic development data from Jiang et al.(Jiang et al. 2017). All raw fastq were trimmed by trimmomatic and quantified by salmon. Gene expression matrix of each sample was merged into an integrated matrix.    
 ```#!/bin/sh                  
-for i in `cat samplename.txt`;do java -Xmx30g -jar trimmomatic-0.39.jar PE -threads 45 ${i}_1.fastq.gz  ${i}_2.fastq.gz ${i}_1.clean.fq.gz ${i}_1.unpaired.fq.gz ${i}_2.clean.fq.gz ${i}_2.unpaired.fq.gz   LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:40 TOPHRED33 > ./run_trim.log      
+for i in `cat samplename.txt`      
+do java -Xmx30g -jar trimmomatic-0.39.jar PE -threads 45 ${i}_1.fastq.gz  ${i}_2.fastq.gz ${i}_1.clean.fq.gz ${i}_1.unpaired.fq.gz ${i}_2.clean.fq.gz ${i}_2.unpaired.fq.gz   LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:40 TOPHRED33 > ./run_trim.log      
 salmon quant --gcBias -l A -i AmexG_v6.0-DD.merge.salmon_sa_index -g Axolotl.v6.0.transcript.gene.txt -1 ${i}_1.clean.fq.gz -2 ${i}_2.clean.fq.gz -p 8 -o ${i}.salmon.count                       
 done
 Rscript tximport.r    
 ```
+## 4. Adding phylostrata value to axolotl embryonic development matrix      
+We added the phylostata map as one cololumn to the axolotl embryonic development gene expression matrix.    
+```python3 add_PS_to_geneExpressionMatrix.py Axolotl_filter.salmon.development.txt Axolotl_BlastPlus_PS_map_final_ps_map.tsv Axolotl_filter.salmon.development.PS.txt```        
+## 5.Calculating Transcriptome age index for axolotl embryonic development    
+In this step, we will calculate the dynamics of TAI by myTAI during axolotl embryonic development.    
 
   
