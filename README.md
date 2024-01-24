@@ -38,5 +38,7 @@ The gene expression matrix with phylostrata
 In this step, we will calculate the dynamics of TAI by myTAI during axolotl embryonic development.     
 `Rscript TAI-calculate.r`    
 # References      
-
+1. Domazet-Loso T, Brajković J, Tautz D. A phylostratigraphy approach to uncover the genomic history of major adaptations in metazoan lineages. Trends Genet. 2007 Nov;23(11):533-9. doi: 10.1016/j.tig.2007.08.014.
+2. Drost HG, Gabel A, Liu J, Quint M, Grosse I. myTAI: evolutionary transcriptomics with R. Bioinformatics. 2018 May 1;34(9):1589-1590. doi: 10.1093/bioinformatics/btx835.
+3. Xiangyu P, Zitian H, Na Q, Jinman L, Xiang L, Yuanhui Q, Zhuqing Z, JiFeng F. Transcriptome age of embryo development and regeneration in axolotl, ***in revision***.        
 * We'd love to hear from you. If you have any questions, please don't be hestitate to contact the author of this manuscript: Xiangyu Pan (pan_xiangyu@nwafu.edu.cn)      
