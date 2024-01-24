@@ -35,10 +35,14 @@ We added the phylostata map as one cololumn to the axolotl embryonic development
 ```python3 add_PS_to_geneExpressionMatrix.py Axolotl_filter.salmon.development.txt Axolotl_BlastPlus_PS_map_final_ps_map.tsv Axolotl_filter.salmon.development.PS.txt```  
 The gene expression matrix with phylostrata 
 ## 5.Calculating Transcriptome age index for axolotl embryonic development    
-In this step, we will calculate the dynamics of TAI by myTAI during axolotl embryonic development.     
+In this step, we will calculate the dynamics of TAI during axolotl embryonic development by myTAI (Drost et al., 2018).     
 `Rscript TAI-calculate.r`    
 # References      
-1. Domazet-Loso T, Brajković J, Tautz D. A phylostratigraphy approach to uncover the genomic history of major adaptations in metazoan lineages. Trends Genet. 2007 Nov;23(11):533-9. doi: 10.1016/j.tig.2007.08.014.
-2. Drost HG, Gabel A, Liu J, Quint M, Grosse I. myTAI: evolutionary transcriptomics with R. Bioinformatics. 2018 May 1;34(9):1589-1590. doi: 10.1093/bioinformatics/btx835.
-3. Xiangyu P, Zitian H, Na Q, Jinman L, Xiang L, Yuanhui Q, Zhuqing Z, JiFeng F. Transcriptome age of embryo development and regeneration in axolotl, ***in revision***.        
+1. Bryant DM, Johnson K, DiTommaso T, Tickle T, Couger MB, Payzin-Dogru D, Lee TJ, Leigh ND, Kuo TH, Davis FG, Bateman J, Bryant S, Guzikowski AR, Tsai SL, Coyne S, Ye WW, Freeman RM Jr, Peshkin L, Tabin CJ, Regev A, Haas BJ, Whited JL. A Tissue-Mapped Axolotl De Novo Transcriptome Enables Identification of Limb Regeneration Factors. Cell Rep. 2017 Jan 17;18(3):762-776. doi: 10.1016/j.celrep.2016.12.063. 
+2. Jiang P, Nelson JD, Leng N, Collins M, Swanson S, Dewey CN, Thomson JA, Stewart R. Analysis of embryonic development in the unsequenced axolotl: Waves of transcriptomic upheaval and stability. Dev Biol. 2017 Jun 15;426(2):143-154. doi: 10.1016/j.ydbio.2016.05.024. Epub 2016 Jul 28.      
+3. Li H, Wei X, Zhou L, Zhang W, Wang C, Guo Y, Li D, Chen J, Liu T, Zhang Y, Ma S, Wang C, Tan F, Xu J, Liu Y, Yuan Y, Chen L, Wang Q, Qu J, Shen Y, Liu S, Fan G, Liu L, Liu X, Hou Y, Liu GH, Gu Y, Xu X. Dynamic cell transition and immune response landscapes of axolotl limb regeneration revealed by single-cell analysis. Protein Cell. 2021 Jan;12(1):57-66. doi: 10.1007/s13238-020-00763-1.    
+4. Wei X, Fu S, Li H, Liu Y, Wang S, Feng W, Yang Y, Liu X, Zeng YY, Cheng M, Lai Y, Qiu X, Wu L, Zhang N, Jiang Y, Xu J, Su X, Peng C, Han L, Lou WP, Liu C, Yuan Y, Ma K, Yang T, Pan X, Gao S, Chen A, Esteban MA, Yang H, Wang J, Fan G, Liu L, Chen L, Xu X, Fei JF, Gu Y. Single-cell Stereo-seq reveals induced progenitor cells involved in axolotl brain regeneration. Science. 2022 Sep 2;377(6610):eabp9444. doi: 10.1126/science.abp9444.    
+5. Domazet-Loso T, Brajković J, Tautz D. A phylostratigraphy approach to uncover the genomic history of major adaptations in metazoan lineages. Trends Genet. 2007 Nov;23(11):533-9. doi: 10.1016/j.tig.2007.08.014.
+6. Drost HG, Gabel A, Liu J, Quint M, Grosse I. myTAI: evolutionary transcriptomics with R. Bioinformatics. 2018 May 1;34(9):1589-1590. doi: 10.1093/bioinformatics/btx835.
+7. Xiangyu P, Zitian H, Na Q, Jinman L, Xiang L, Yuanhui Q, Zhuqing Z, JiFeng F. Transcriptome age of embryo development and regeneration in axolotl, ***in revision***.        
 * We'd love to hear from you. If you have any questions, please don't be hestitate to contact the author of this manuscript: Xiangyu Pan (pan_xiangyu@nwafu.edu.cn)      
