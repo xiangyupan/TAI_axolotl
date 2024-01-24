@@ -7,16 +7,26 @@ This study used previously published datasets (Bryant et al. 2017; Jiang et al. 
 ## 2. Performing Phylostratigraphy  
 Phylostratigraphy analysis for axolotl genes are following the methods in [https://github.com/AlexGa/Phylostratigraphy](https://github.com/AlexGa/Phylostratigraphy).
 ###  Constructing index for database    
-`makeblastdb -dbtype prot -in phyloBlastDB_Drost_Gabel_Grosse_Quint.fa`    
+```makeblastdb -dbtype prot -in phyloBlastDB_Drost_Gabel_Grosse_Quint.fa```    
 ###  Picking the longest transcript for each axolotl gene and Filtering axolotl genes to obtain high confidence protein coding genes    
 Following suggestions from author who assemblied the axolotl genome, genes with ORFs which had been verified by RNA-seq from the annotation file (GFF file) were retained as axolotl highly confidence protein coding genes. Those genes located in scaffolds were also filtered out.  
-`perl -e 'while(<>){my $header=$_; chomp $header; my $seq=<>; chomp $seq; my ($tran, $gene) = $header =~ />(\S+?); gene_id "(\S+?)";/; print $tran,"\t",$gene,"\t",length($seq),"\n"}' AmexT_v47.PEPTIDES.fa > link`  
-`sort -k2,2 -k3,3nr link | perl -lane '$hash{$F[1]}++; print $_ if $hash{$F[1]} == 1' > link.longest`  
-`perl -e 'open(IN1, shift); while(<IN1>){chomp; @A=split/\s+/; $hash{$A[0]}=1} open(IN2, shift); while(<IN2>){my $header=$_; chomp $header; my $seq=<IN2>; chomp $seq; my ($tran, $gene) = $header =~ />(\S+?); gene_id "(\S+?)";/; print $header,"\n",$seq,"\n" if exists $hash{$tran}}' link.longest AmexT_v47.PEPTIDES.fa > AmexT_v47.PEPTIDES.longest.fa`   
-`les AmexT_v47.release.gtf |egrep "ORF_type \"Putative|N-terminal|C-terminal|Partial" |les|grep -v 'PTC' |les|awk -F "\t" '{print $9}' |sed 's/;/\t/g' |awk -F "\t" '{print $1}' |sed 's/gene_id //g' |sed 's/"//g' |uniq |les |grep -v 'AMEX60DDU'  > AmexT_v47.PEPTIDES.pick`  
-`python3 pick_putative_from_longestFa.py -f AmexT_v47.PEPTIDES.longest.fa -g AmexT_v47.PEPTIDES.pick -o AmexT_v47.PEPTIDES.pick.fa`      
+```perl -e 'while(<>){my $header=$_; chomp $header; my $seq=<>; chomp $seq; my ($tran, $gene) = $header =~ />(\S+?); gene_id "(\S+?)";/; print $tran,"\t",$gene,"\t",length($seq),"\n"}' AmexT_v47.PEPTIDES.fa > link
+sort -k2,2 -k3,3nr link | perl -lane '$hash{$F[1]}++; print $_ if $hash{$F[1]} == 1' > link.longest  
+perl -e 'open(IN1, shift); while(<IN1>){chomp; @A=split/\s+/; $hash{$A[0]}=1} open(IN2, shift); while(<IN2>){my $header=$_; chomp $header; my $seq=<IN2>; chomp $seq; my ($tran, $gene) = $header =~ />(\S+?); gene_id "(\S+?)";/; print $header,"\n",$seq,"\n" if exists $hash{$tran}}' link.longest AmexT_v47.PEPTIDES.fa > AmexT_v47.PEPTIDES.longest.fa  
+les AmexT_v47.release.gtf |egrep "ORF_type \"Putative|N-terminal|C-terminal|Partial" |les|grep -v 'PTC' |les|awk -F "\t" '{print $9}' |sed 's/;/\t/g' |awk -F "\t" '{print $1}' |sed 's/gene_id //g' |sed 's/"//g' |uniq |les |grep -v 'AMEX60DDU'  > AmexT_v47.PEPTIDES.pick  
+python3 pick_putative_from_longestFa.py -f AmexT_v47.PEPTIDES.longest.fa -g AmexT_v47.PEPTIDES.pick -o AmexT_v47.PEPTIDES.pick.fa
+```
 ###  Adding taxonomy header for axolotl protein coding sequences    
-`python3 add_taxomomy_to_axolotlProtein.fa.py AmexT_v47.PEPTIDES.filter.fasta axolotl.cellular.organisms.header AmexT_v47.PEPTIDES.filter.PSname.fasta`    
+```python3 add_taxomomy_to_axolotlProtein.fa.py AmexT_v47.PEPTIDES.filter.fasta axolotl.cellular.organisms.header AmexT_v47.PEPTIDES.filter.PSname.fasta```    
 ###  Aligning axolotl protein coding sequences with phyloBlastDB to obtain the phylostrata map of all axolotl genes    
-`perl createPSmap.pl --organism AmexT_v47.PEPTIDES.filter.PSname.fasta --database phyloBlastDB_Drost_Gabel_Grosse_Quint.fa --prefix AmexT_v47.PEPTIDES.filter.PS --seqOffset 1000  --evalue 1e-5 --threads 60 --blastPlus`    
-## 3.   
+```perl createPSmap.pl --organism AmexT_v47.PEPTIDES.filter.PSname.fasta --database phyloBlastDB_Drost_Gabel_Grosse_Quint.fa --prefix AmexT_v47.PEPTIDES.filter.PS --seqOffset 1000  --evalue 1e-5 --threads 60 --blastPlus```    
+## 3. Obtain the gene expression matrix of axolotl embryonic development      
+We downloaded the raw fastq files of axolotl embryonic development data from Jiang et al.(Jiang et al. 2017). All raw fastq were trimmed by trimmomatic and quantified by salmon.
+```#!/bin/sh                  
+for i in `cat samplename.txt`;do java -Xmx30g -jar trimmomatic-0.39.jar PE -threads 45 ${i}_1.fastq.gz  ${i}_2.fastq.gz ${i}_1.clean.fq.gz ${i}_1.unpaired.fq.gz ${i}_2.clean.fq.gz ${i}_2.unpaired.fq.gz   LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:40 TOPHRED33 > ./run_trim.log      
+salmon quant --gcBias -l A -i AmexG_v6.0-DD.merge.salmon_sa_index -g Axolotl.v6.0.transcript.gene.txt -1 ${i}_1.clean.fq.gz -2 ${i}_2.clean.fq.gz -p 8 -o ${i}.salmon.count                       
+done
+Rscript tximport.r    
+```
+
+  
