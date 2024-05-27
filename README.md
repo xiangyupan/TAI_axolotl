@@ -33,7 +33,7 @@ Rscript tximport.r
 ## 4. Adding phylostrata value to axolotl embryonic development matrix      
 We added the phylostata map as one cololumn to the axolotl embryonic development gene expression matrix.    
 ```python3 add_PS_to_geneExpressionMatrix.py Axolotl_filter.salmon.development.txt Axolotl_BlastPlus_PS_map_final_ps_map.tsv Axolotl_filter.salmon.development.PS.txt```  
-The gene expression matrix with phylostrata 
+The gene expression matrix with phylostrata will be used for transcriptome age index analysis.    
 ## 5.Calculating Transcriptome age index for axolotl embryonic development    
 In this step, we will calculate the dynamics of TAI during axolotl embryonic development by myTAI (Drost et al., 2018).     
 `Rscript TAI-calculate.r`    
